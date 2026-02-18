@@ -89,19 +89,72 @@ int eliminateDuplicates(string a[], int n)
 
 bool contains(const string a1[], int n1, const string a2[], int n2)
 {
-    
+    //error if no elements to check
+    if (n1 < 0 || n2 < 0)
+    return false;
+    if (n1 < n2)
+    return false;
+    if (n2 == 0)
+    return true;
+
+    int j = 0;
+    //iterate thru array
+    for (int i = 0; i < n1 && j < n2; i++){
+        //increment FORWARD thru i, if j is found then increment next j find
+        //ONLY MOVES FORWARD
+        if (a1[i] == a2[j]){
+            j++;
+        }
+    }
+    //if matches properly
+    if(j == n2)
+    return true;
+    //else return false
     return false;
 }
 
+// j is the end of the left section
+// i leads j
 
+// j grows left and i scans and if an element is found j grows to contain it
+// i keeps going right regardless
 int divide(string a[], int n, string divider)
 {
+    //error if no elements to check
+    if (n < 0)
     return -1;
+
+    //boundary
+    int j = 0;
+
+    for (int i = 0; i < n; i++){
+        //if a is less than divider
+        if (a[i] < divider){
+            //temp swaps a[i] with a[j]
+            //move to the left section 
+            string temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+            // i is on the right of j
+            // >= divider pushed right
+            j++;
+        }
+    }
+    return j;
 }
 
 
 int moveToBack(string a[], int n, int pos)
 {
+    //error if no elements to check
+    if (n <= 0 || pos < 0 || pos >= n)
     return -1;
+    string temp = a[pos];
+    for (int i = pos; i < n-1; i++){
+        a[i] = a[i+1];
+    }
+    a[n-1] = temp;
+    //spec says return position
+    return pos;
 }
 
